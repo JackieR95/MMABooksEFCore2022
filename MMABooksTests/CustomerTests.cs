@@ -53,11 +53,20 @@ namespace MMABooksTests
             PrintAll(customers);
         }
 
+        // Test to verify that we are getting the customer with ID 20's invoices
         [Test]
         public void GetWithInvoicesTest()
         {
-           // get the customer whose id is 20 and all of the invoices for that customer
+            // get the customer whose id is 20 and all of the invoices for that customer
+
+            c = dbContext.Customers.Include(c => c.Invoices).SingleOrDefault(c => c.CustomerId == 20);
+            Assert.IsNotNull(c);
+            Assert.AreEqual("1942 S. Gaydon Avenue", c.Address);
+            Assert.AreEqual(20, c.CustomerId);
+            Assert.AreEqual(3, c.Invoices.Count);
+            Console.WriteLine(c);
         }
+
         /*
         [Test]
         public void GetWithJoinTest()

@@ -22,7 +22,7 @@ namespace MMABooksEFClasses.Models
 
         public override string ToString()
         {
-            return $"{Name},  {Address}, {City}, {State}, {ZipCode}";
+            return $"{CustomerId}, {Name},  {Address}, {City}, {State}, {ZipCode}";
         }
     }
 }

@@ -14,5 +14,10 @@ namespace MMABooksEFClasses.Models
         public string StateName { get; set; } = null!;
 
         public virtual ICollection<Customer> Customers { get; set; }
+
+        public override string ToString()
+        {
+            return $"{StateCode} - {StateName}";
+        }
     }
 }

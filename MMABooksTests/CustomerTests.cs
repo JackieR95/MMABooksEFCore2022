@@ -1,17 +1,16 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System;
-
-using NUnit.Framework;
-using MMABooksEFClasses.MarisModels;
 using Microsoft.EntityFrameworkCore;
+using MMABooksEFClasses.Models;
+using NUnit.Framework;
 
 namespace MMABooksTests
 {
     [TestFixture]
     public class CustomerTests
     {
-        /*
+        
         MMABooksContext dbContext;
         Customer? c;
         List<Customer>? customers;
@@ -23,9 +22,15 @@ namespace MMABooksTests
             dbContext.Database.ExecuteSqlRaw("call usp_testingResetData()");
         }
 
+        // Verify that retrieving all customers returns the correct total count,
+        // and that the first customer matches the expected record.
         [Test]
         public void GetAllTest()
         {
+            customers = dbContext.Customers.OrderBy(c => c.Name).ToList();
+            Assert.AreEqual(696, customers.Count);
+            Assert.AreEqual("Abeyatunge, Derek", customers[0].Name);
+            PrintAll(customers);
         }
 
         [Test]
@@ -44,7 +49,7 @@ namespace MMABooksTests
         {
            // get the customer whose id is 20 and all of the invoices for that customer
         }
-
+        /*
         [Test]
         public void GetWithJoinTest()
         {
@@ -61,6 +66,7 @@ namespace MMABooksTests
                 Console.WriteLine(c);
             }
         }
+        */
 
         [Test]
         public void DeleteTest()
@@ -87,6 +93,6 @@ namespace MMABooksTests
                 Console.WriteLine(c);
             }
         }
-        */
+        
     }
 }

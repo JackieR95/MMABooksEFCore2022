@@ -1,18 +1,19 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System;
-
-using NUnit.Framework;
-using MMABooksEFClasses.MarisModels;
 using Microsoft.EntityFrameworkCore;
+using MMABooksEFClasses.Models;
+using NUnit.Framework;
 
 namespace MMABooksTests
 {
     [TestFixture]
     public class ProductTests
     {
-        /*
+        
         MMABooksContext dbContext;
+        Product? p;
+        List<Product>? products;
 
         [SetUp]
         public void Setup()
@@ -21,9 +22,15 @@ namespace MMABooksTests
             dbContext.Database.ExecuteSqlRaw("call usp_testingResetData()");
         }
 
+        // Verify that retrieving all Product returns the correct total count,
+        // and that the first Product matches the expected record.
         [Test]
         public void GetAllTest()
         {
+            products = dbContext.Products.OrderBy(p => p.ProductCode).ToList();
+            Assert.AreEqual(16, products.Count);
+            Assert.AreEqual("A4CS", products[0].ProductCode);
+            PrintAll(products);
         }
 
         [Test]
@@ -68,6 +75,14 @@ namespace MMABooksTests
         {
 
         }
-       */
+
+        public void PrintAll(List<Product> products)
+        {
+            foreach (Product p in products)
+            {
+                Console.WriteLine(p);
+            }
+        }
+
     }
 }

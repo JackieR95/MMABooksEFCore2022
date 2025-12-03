@@ -3,7 +3,7 @@ using System.Linq;
 using System;
 
 using NUnit.Framework;
-using MMABooksEFClasses.MarisModels;
+using MMABooksEFClasses.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace MMABooksTests
@@ -24,6 +24,8 @@ namespace MMABooksTests
             dbContext.Database.ExecuteSqlRaw("call usp_testingResetData()");
         }
 
+        // Verify that retrieving all states returns the correct total count,
+        // and that the first state matches the expected record.
         [Test]
         public void GetAllTest()
         {
@@ -61,13 +63,14 @@ namespace MMABooksTests
             Console.WriteLine(s);
         }
 
+        
         [Test]
         public void DeleteTest()
         {
-            s = dbContext.States.Find("HI");
+            s = dbContext.States.Find("??");
             dbContext.States.Remove(s);
             dbContext.SaveChanges();
-            Assert.IsNull(dbContext.States.Find("HI"));
+            Assert.IsNull(dbContext.States.Find("??"));
         }
 
         [Test]

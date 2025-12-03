@@ -32,10 +32,14 @@ namespace MMABooksTests
             Assert.AreEqual("Abeyatunge, Derek", customers[0].Name);
             PrintAll(customers);
         }
-
+        // Test that verify's a customer can be retrieved by its primary key CustomerID("102")
         [Test]
         public void GetByPrimaryKeyTest()
         {
+            c = dbContext.Customers.Find(102);
+            Assert.IsNotNull(c);
+            Assert.AreEqual("Hernandez, Esta", c.Name);
+            Console.WriteLine(c);
         }
 
         [Test]

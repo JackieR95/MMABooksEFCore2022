@@ -33,9 +33,14 @@ namespace MMABooksTests
             PrintAll(products);
         }
 
+        // Test that verifys a product can be retrieved by its primary key ProductCode("JAVP")
         [Test]
         public void GetByPrimaryKeyTest()
         {
+            p = dbContext.Products.Find("JAVP");
+            Assert.IsNotNull(p);
+            Assert.AreEqual("Murach's Java Programming", p.Description);
+            Console.WriteLine(p);
         }
 
         [Test]

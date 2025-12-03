@@ -35,6 +35,7 @@ namespace MMABooksTests
             PrintAll(states);
         }
 
+        // Test that verify's a State can be retrieved by its primary key StateName("OR")
         [Test]
         public void GetByPrimaryKeyTest()
         {

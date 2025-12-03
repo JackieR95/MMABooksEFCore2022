@@ -67,16 +67,16 @@ namespace MMABooksTests
             Console.WriteLine(c);
         }
 
-        /*
+        // Test retrieving customers with their state name by joining Customers.State to States.StateCode
         [Test]
         public void GetWithJoinTest()
         {
             // get a list of objects that include the customer id, name, statecode and statename
             var customers = dbContext.Customers.Join(
                dbContext.States,
-               c => c.StateCode,
+               c => c.State,
                s => s.StateCode,
-               (c, s) => new { c.CustomerId, c.Name, c.StateCode, s.StateName }).OrderBy(r => r.StateName).ToList();
+               (c, s) => new { c.CustomerId, c.Name, c.State, s.StateName }).OrderBy(r => r.StateName).ToList();
             Assert.AreEqual(696, customers.Count);
             // I wouldn't normally print here but this lets you see what each object looks like
             foreach (var c in customers)
@@ -84,7 +84,7 @@ namespace MMABooksTests
                 Console.WriteLine(c);
             }
         }
-        */
+        
 
         [Test]
         public void DeleteTest()

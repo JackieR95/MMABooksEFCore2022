@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 
 namespace MMABooksEFClasses.Models
 {
@@ -16,5 +17,10 @@ namespace MMABooksEFClasses.Models
         public int OnHandQuantity { get; set; }
 
         public virtual ICollection<Invoicelineitem> Invoicelineitems { get; set; }
+
+        public override string ToString()
+        {
+            return $"{ProductCode},  {Description}, {UnitPrice}, {OnHandQuantity}";
+        }
     }
 }

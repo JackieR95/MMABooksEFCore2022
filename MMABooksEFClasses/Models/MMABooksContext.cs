@@ -22,6 +22,7 @@ namespace MMABooksEFClasses.Models
         public virtual DbSet<Product> Products { get; set; } = null!;
         public virtual DbSet<State> States { get; set; } = null!;
 
+        // Set this up to protect my password for my database
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             string connectionString = ConfigDB.GetMySqlConnectionString();

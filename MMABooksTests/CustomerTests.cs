@@ -42,10 +42,15 @@ namespace MMABooksTests
             Console.WriteLine(c);
         }
 
+        // Test to verify that we can retrieve multiple customers or a single specific customer.
         [Test]
         public void GetUsingWhere()
         {
             // get a list of all of the customers who live in OR
+            customers = dbContext.Customers.Where(c => c.State.StartsWith("OR")).OrderBy(c => c.Name).ToList();
+            Assert.AreEqual(5, customers.Count);
+            Assert.AreEqual("Erpenbach, Lee", customers[0].Name);
+            PrintAll(customers);
         }
 
         [Test]

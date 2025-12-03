@@ -45,6 +45,7 @@ namespace MMABooksTests
             Console.WriteLine(s);
         }
 
+        // Test to verify that we can retrieve multiple customers or a single specific state
         [Test]
         public void GetUsingWhere()
         {

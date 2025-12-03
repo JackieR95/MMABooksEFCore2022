@@ -43,10 +43,16 @@ namespace MMABooksTests
             Console.WriteLine(p);
         }
 
+        // Test to verify that we can retrieve multiple customers or a single specific product.
         [Test]
         public void GetUsingWhere()
         {
             // get a list of all of the products that have a unit price of 56.50
+
+            products = dbContext.Products.Where(p => p.UnitPrice == 56.5000m).OrderBy(p => p.ProductCode).ToList();
+            Assert.AreEqual(7, products.Count);
+            Assert.AreEqual("Murach's Java Programming", products[5].Description);
+            PrintAll(products);
         }
 
         [Test]

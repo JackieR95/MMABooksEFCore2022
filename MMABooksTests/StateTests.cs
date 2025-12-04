@@ -85,6 +85,8 @@ namespace MMABooksTests
             s.StateName = "Hawaii";
             dbContext.States.Add(s);
             dbContext.SaveChanges();
+
+
             Assert.IsNotNull(dbContext.States.Find("HI"));
             Console.WriteLine(s);
         }

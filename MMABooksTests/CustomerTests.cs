@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.TestPlatform.AdapterUtilities;
 using MMABooksEFClasses.Models;
 using NUnit.Framework;
 
@@ -14,12 +15,30 @@ namespace MMABooksTests
         MMABooksContext dbContext;
         Customer? c;
         List<Customer>? customers;
+        int testCustomerId;
+        
 
         [SetUp]
         public void Setup()
         {
             dbContext = new MMABooksContext();
             dbContext.Database.ExecuteSqlRaw("call usp_testingResetData()");
+        }
+
+        // Test customer that is used for being updated and deleted
+        [SetUp]
+        public void TestCustomer()
+        {
+            c = new Customer();
+            c.Name = "Donald Duck";
+            c.Address = "101 Main st";
+            c.City = "Orlando";
+            c.State = "FL";
+            c.ZipCode = "10001";
+            dbContext.Customers.Add(c);
+            dbContext.SaveChanges();
+
+            testCustomerId = c.CustomerId;
         }
 
         // Verify that retrieving all customers returns the correct total count,
@@ -32,6 +51,7 @@ namespace MMABooksTests
             Assert.AreEqual("Abeyatunge, Derek", customers[0].Name);
             PrintAll(customers);
         }
+
         // Test that verify's a customer can be retrieved by its primary key CustomerID("102")
         [Test]
         public void GetByPrimaryKeyTest()
@@ -84,24 +104,49 @@ namespace MMABooksTests
                 Console.WriteLine(c);
             }
         }
-        
 
+        // Test that Verifies that a Customer has been deleted
         [Test]
         public void DeleteTest()
         {
-
+            c = dbContext.Customers.Find(testCustomerId);
+            dbContext.Customers.Remove(c);
+            dbContext.SaveChanges();
+            Assert.IsNull(dbContext.Customers.Find(testCustomerId));
         }
 
+        // Test that verifies the customer Minnie mouse has been created. 
         [Test]
         public void CreateTest()
         {
+            c = new Customer();
+            c.Name = "Minnie Mouse";
+            c.Address = "101 Main st";
+            c.City = "Orlando";
+            c.State = "FL";
+            c.ZipCode = "10001";
+            dbContext.Customers.Add(c);
+            dbContext.SaveChanges();
 
+
+            Assert.IsNotNull(dbContext.Customers.Find(c.CustomerId));
+            Console.WriteLine(c);
         }
 
+        // Test that verifies that a Customer has been updated
         [Test]
         public void UpdateTest()
         {
+            c = dbContext.Customers.Find(testCustomerId);
+            c.Address = "101 Main Street";
+            c.ZipCode = "10005";
+            dbContext.Customers.Update(c);
+            dbContext.SaveChanges();
 
+            c = dbContext.Customers.Find(testCustomerId);
+            Assert.AreEqual("101 Main Street", c.Address);
+            Assert.AreEqual("10005", c.ZipCode);
+            Console.WriteLine(c);
         }
 
         public void PrintAll(List<Customer> customers)

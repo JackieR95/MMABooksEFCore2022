@@ -55,6 +55,7 @@ namespace MMABooksTests
             PrintAll(states);
         }
 
+        // Test that get's the default or a single state
         [Test]
         public void GetWithCustomersTest()
         {
@@ -65,26 +66,41 @@ namespace MMABooksTests
             Console.WriteLine(s);
         }
 
-        
+        // Test that Verifies that a State has been deleted
         [Test]
         public void DeleteTest()
         {
-            s = dbContext.States.Find("??");
+            s = dbContext.States.Find("HI");
             dbContext.States.Remove(s);
             dbContext.SaveChanges();
-            Assert.IsNull(dbContext.States.Find("??"));
+            Assert.IsNull(dbContext.States.Find("HI"));
         }
 
+        // Test that verifies that Hawaii with stateCode (HI) has been created. 
         [Test]
         public void CreateTest()
         {
-
+            s = new State();
+            s.StateCode = "HI";
+            s.StateName = "Hawaii";
+            dbContext.States.Add(s);
+            dbContext.SaveChanges();
+            Assert.IsNotNull(dbContext.States.Find("HI"));
+            Console.WriteLine(s);
         }
-
+           
+        // Test that verifies that a state has been updated
         [Test]
         public void UpdateTest()
         {
+            s = dbContext.States.Find("OR");
+            s.StateName = "Ore";
+            dbContext.States.Update(s);
+            dbContext.SaveChanges();
 
+            s = dbContext.States.Find("OR");
+            Assert.AreEqual("Ore", s.StateName);
+            Console.WriteLine(s);
         }
 
         public void PrintAll(List<State> states)

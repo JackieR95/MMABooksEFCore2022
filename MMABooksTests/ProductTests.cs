@@ -14,12 +14,28 @@ namespace MMABooksTests
         MMABooksContext dbContext;
         Product? p;
         List<Product>? products;
+        string testProduct;
 
         [SetUp]
         public void Setup()
         {
             dbContext = new MMABooksContext();
             dbContext.Database.ExecuteSqlRaw("call usp_testingResetData()");
+        }
+
+        // Test customer that is used for being updated and deleted
+        [SetUp]
+        public void TestProduct()
+        {
+            p = new Product();
+            p.ProductCode = "LD5T";
+            p.Description = "Murach's C# 2015";
+            p.UnitPrice = 24.50000m;
+            p.OnHandQuantity = 233;
+            dbContext.Products.Add(p);
+            dbContext.SaveChanges();
+
+            testProduct = p.ProductCode;
         }
 
         // Verify that retrieving all Product returns the correct total count,
@@ -69,22 +85,47 @@ namespace MMABooksTests
             }
         }
 
+        // Test that Verifies that a Product has been deleted
         [Test]
         public void DeleteTest()
         {
-
+            p = dbContext.Products.Find(testProduct);
+            dbContext.Products.Remove(p);
+            dbContext.SaveChanges();
+            Assert.IsNull(dbContext.Products.Find(testProduct));
         }
 
+        // Test that verifies that Product with code DF6E has been created. 
         [Test]
         public void CreateTest()
         {
+            p = new Product();
+            p.ProductCode = "DF6E";
+            p.Description = "Murach's C# 2022";
+            p.UnitPrice = 34.50000m;
+            p.OnHandQuantity = 500;
+            dbContext.Products.Add(p);
+            dbContext.SaveChanges();
 
+
+            Assert.IsNotNull(dbContext.Products.Find("DF6E"));
+            Console.WriteLine(p);
         }
 
+        // Test that verifies that testProduct with code LD5T has been updated
         [Test]
         public void UpdateTest()
         {
+            p = dbContext.Products.Find(testProduct);
+            p.Description = "Murach's C# 2016";
+            p.OnHandQuantity = 178;
+            dbContext.Products.Update(p);
+            dbContext.SaveChanges();
 
+            p = dbContext.Products.Find(testProduct);
+            Assert.AreEqual("Murach's C# 2016", p.Description);
+            Assert.AreEqual(178, p.OnHandQuantity);
+            Console.WriteLine(p);
         }
 
         public void PrintAll(List<Product> products)

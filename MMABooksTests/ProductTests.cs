@@ -23,7 +23,7 @@ namespace MMABooksTests
             dbContext.Database.ExecuteSqlRaw("call usp_testingResetData()");
         }
 
-        // Test customer that is used for being updated and deleted
+        // Test Product that is used for being updated and deleted
         [SetUp]
         public void TestProduct()
         {
